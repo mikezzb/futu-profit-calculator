@@ -17,14 +17,10 @@ class TransactionStore {
   @action async loadFromStore() {
     db.collection('transactions').get().then(
       snap => {
-        console.log(snap.docs.map(item => ({
+        this.setTransactions(snap.docs.map(item => ({
           ...item.data(),
           id: item.id,
         })));
-        this.transactions = snap.docs.map(item => ({
-          ...item.data(),
-          id: item.id,
-        }));
       }
     );
   }
@@ -37,11 +33,33 @@ class TransactionStore {
         id,
       })
       .then(() => {
-        this.transactions.unshift({
+        this.addToStore({
           ...transaction,
-          id,
+          id: String(id),
         });
       });
+  }
+
+  @action async deleteTransactions(transactionIds) {
+    transactionIds.forEach(id => {
+      db.doc(`transactions/${id}`)
+        .delete()
+        .then(() => this.deleteWithId(id));
+    });
+  }
+
+  @action.bound addToStore(transaction) {
+    this.transactions.unshift(transaction);
+  }
+
+  @action.bound deleteWithId(id) {
+    const index = this.transactions.findIndex(transaction => transaction.id === id);
+    if (index !== -1) {
+      this.transactions.splice(index, 1);
+    }
+    else {
+      console.log('Error!');
+    }
   }
 
   @action.bound setTransactions(transactions) {

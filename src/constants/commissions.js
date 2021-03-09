@@ -1,4 +1,4 @@
-const FUTU_US_TRANSACTION_FEES = Object.freeze({
+const FUTU_US_TRANSACTION_FEES = Object.freeze({ // PER SHARE US FEES
   COMMISSION: 0.0049,
   PLATFORM: 0.005,
   CLEARING: 0.003,
@@ -29,7 +29,34 @@ const FUTU_US_SALE = Object.freeze({
   },
 });
 
+const FUTU_HK_TRANSACTION_FEES = Object.freeze({ // PER TRANSACTION HK FEES
+  // COMMISSION: 0.0003,
+  SETTLEMENT: 0.00002,
+  STAMP_DUTY: 0.001,
+  TRADING: 0.00005,
+  LEVY: 0.000027,
+});
+
+const FUTU_HK_MIN_FEES = Object.freeze({
+  // COMMISSION: 3,
+  PLATFORM: 15,
+  TARIFF: 0.5,
+  SETTLEMENT: 2,
+  STAMP_DUTY: 1,
+  TRADING: 0.01,
+  LEVY: 0.01,
+});
+
+const FUTU_HK_BUY = Object.freeze({
+  PER_AMOUNT: FUTU_HK_TRANSACTION_FEES,
+  MIN_FEES: FUTU_HK_MIN_FEES,
+});
+
+const FUTU_HK_SALE = FUTU_HK_BUY;
+
 export {
   FUTU_US_BUY,
-  FUTU_US_SALE
+  FUTU_US_SALE,
+  FUTU_HK_BUY,
+  FUTU_HK_SALE
 };

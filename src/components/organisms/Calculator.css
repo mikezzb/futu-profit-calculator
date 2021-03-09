@@ -30,3 +30,9 @@
     margin-top: 20px;
 }
 
+@media only screen and (max-width: 1360px) {
+    .calculator-card {
+        width: 84vw;
+        padding: 10px 3vw;
+    }
+}

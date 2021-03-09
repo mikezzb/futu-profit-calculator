@@ -1,4 +1,18 @@
 .profit-table {
-    width: 580px;
+    display: flex;
+    flex-direction: column;
+    width: 650px;
 }
 
+.std-btn {
+    margin: 20px auto 20px auto;
+}
+
+@media only screen and (max-width: 1360px) {
+    .profit-table {
+        width: 90vw;
+        margin-right: auto;
+        margin-left: auto;
+    }
+}
+  

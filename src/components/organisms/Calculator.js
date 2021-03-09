@@ -1,20 +1,16 @@
 import React, {
-  useReducer, useState, useEffect, useContext
+  useReducer, useContext
 } from 'react';
 import {
   Paper, RadioGroup, FormControl, FormControlLabel, FormLabel,
   Radio, TextField, InputAdornment, Input, InputLabel, Button,
-  Table, TableBody, TableCell, TableContainer, TableHead, TableRow
 } from '@material-ui/core';
-import { DataGrid } from '@material-ui/data-grid';
-import { MdLocationOn } from 'react-icons/md';
 import { observer } from 'mobx-react-lite';
 
 import { TransactionContext } from '../../store';
 import ProfitTable from '../molecules/ProfitTable';
 import calculate from '../../helpers/calculate';
 import './Calculator.css';
-import TransactionStore from '../../store/TransactionStore';
 
 const CalculatorRow = ({ label, children }) =>
   <div className="calculator-row">
@@ -37,7 +33,7 @@ const Calculator = () => {
   const generateResult = () => {
     const result = calculate(form);
     return {
-      id: 'calculator',
+      id: 0,
       profit: result.profit,
       percentageChange: result.percentageChange,
       buyPrice: form.buyPrice,
@@ -77,7 +73,7 @@ const Calculator = () => {
         </CalculatorRow>
         <div className="calculator-btn">
           <Button
-            variant="contained"
+            variant="outlined"
             color="primary"
             elevation={2}
             onClick={() => transaction.saveTransaction(generateResult())}
@@ -94,6 +90,7 @@ const Calculator = () => {
           ] : [generateResult()])
         }
         pageSize={5}
+        deleteTransactions={selected => transaction.deleteTransactions(selected)}
       />
     </div>
   );

@@ -13,16 +13,18 @@ module.exports = {
     ReactDOM: true,
     ReactRouterDOM: true,
   },
+  parser: 'babel-eslint',
   parserOptions: {
     ecmaFeatures: {
       jsx: true,
+      experimentalObjectRestSpread: true,
     },
-    ecmaVersion: 2018,
+    ecmaVersion: 2020,
     sourceType: 'module',
   },
   plugins: [
     'react',
-    // 'only-warn', // for run build
+    'only-warn', // for run build
   ],
   rules: {
     'indent': ['error', 2, { SwitchCase: 1 }],

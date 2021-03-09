@@ -3,16 +3,6 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import calculate from './helpers/calculate';
-
-const result = calculate({
-  market: 'US',
-  numOfShares: 65,
-  buyPrice: 15.17,
-  sellPrice: 15.6,
-});
-
-console.log(result);
 
 ReactDOM.render(
   <React.StrictMode>

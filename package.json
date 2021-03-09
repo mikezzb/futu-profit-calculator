@@ -2,12 +2,17 @@
   "name": "leek",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://mikezzb.github.io/leek",
   "dependencies": {
+    "@babel/preset-react": "^7.12.13",
     "@material-ui/core": "^4.11.3",
     "@material-ui/data-grid": "^4.0.0-alpha.21",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
+    "firebase": "^8.2.10",
+    "mobx": "^6.1.8",
+    "mobx-react-lite": "^3.2.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-icons": "^4.2.0",
@@ -15,20 +20,32 @@
     "web-vitals": "^1.0.1"
   },
   "devDependencies": {
+    "@babel/core": "^7.13.10",
+    "@babel/plugin-proposal-class-properties": "^7.13.0",
+    "@babel/plugin-proposal-decorators": "^7.13.5",
+    "@babel/preset-env": "^7.13.10",
+    "babel-eslint": "^10.1.0",
+    "babel-preset-mobx": "^2.0.0",
+    "customize-cra": "^1.0.0",
     "eslint": "^7.20.0",
     "eslint-config-airbnb": "^18.1.0",
+    "eslint-config-react-app": "^6.0.0",
     "eslint-plugin-import": "^2.20.1",
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-only-warn": "^1.0.2",
     "eslint-plugin-react": "^7.19.0",
     "eslint-plugin-react-hooks": "^2.5.1",
-    "gh-pages": "^3.1.0"
+    "gh-pages": "^3.1.0",
+    "react-app-rewired": "^2.1.8"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test",
+    "eject": "react-app-rewired eject",
+    "predeploy": "yarn run build",
+    "deploy": "gh-pages -d build",
+    "lint": "eslint --fix --ext .js,.jsx ."
   },
   "eslintConfig": {
     "extends": [

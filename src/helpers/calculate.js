@@ -26,12 +26,12 @@ const calculate = ({
     const sellCommission = getFee(FUTU_US_SALE, sellPrice, numOfShares);
     const commission = buyCommission + sellCommission;
     const profit = (sellPrice - buyPrice) * numOfShares - commission;
-    const percentageChange = (sellPrice - buyPrice) / buyPrice;
+    const percentageChange = profit / (buyPrice * numOfShares);
     return {
-      profit,
+      profit: profit.toFixed(3),
       buyCommission,
       sellCommission,
-      percentageChange,
+      percentageChange: (percentageChange * 100).toFixed(3),
     };
   }
   return {};

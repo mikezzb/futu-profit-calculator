@@ -1,5 +1,4 @@
 .calculator-card {
-    min-width: 380px;
     padding: 20px 40px;
     display: flex;
     flex-direction: column;
@@ -28,14 +27,6 @@
 }
 
 .calculator-btn {
-    margin-top: 10px;
+    margin-top: 20px;
 }
 
-.profit-table-container {
-    width: fit-content;
-}
-
-.profit-table {
-    height: 240px;
-    width: 720px;
-}

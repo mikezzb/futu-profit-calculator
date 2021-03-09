@@ -1,4 +1,6 @@
-import React, { useReducer, useState, useEffect } from 'react';
+import React, {
+  useReducer, useState, useEffect, useContext
+} from 'react';
 import {
   Paper, RadioGroup, FormControl, FormControlLabel, FormLabel,
   Radio, TextField, InputAdornment, Input, InputLabel, Button,
@@ -6,28 +8,13 @@ import {
 } from '@material-ui/core';
 import { DataGrid } from '@material-ui/data-grid';
 import { MdLocationOn } from 'react-icons/md';
+import { observer } from 'mobx-react-lite';
 
+import { TransactionContext } from '../../store';
+import ProfitTable from '../molecules/ProfitTable';
 import calculate from '../../helpers/calculate';
 import './Calculator.css';
-
-const columns = [
-  { field: 'id', headerName: 'ID', width: 100 },
-  {
-    field: 'profit', headerName: 'Profit ($)', width: 120, type: 'number',
-  },
-  {
-    field: 'percentageChange', headerName: 'Gain (%)', width: 120,
-  },
-  {
-    field: 'buyPrice', headerName: 'Buy ($)', width: 100, type: 'number',
-  },
-  {
-    field: 'sellPrice', headerName: 'Sell ($)', width: 100, type: 'number',
-  },
-  {
-    field: 'commission', headerName: 'Commission ($)', width: 160, type: 'number',
-  },
-];
+import TransactionStore from '../../store/TransactionStore';
 
 const CalculatorRow = ({ label, children }) =>
   <div className="calculator-row">
@@ -36,6 +23,7 @@ const CalculatorRow = ({ label, children }) =>
   </div>;
 
 const Calculator = () => {
+  const transaction = useContext(TransactionContext);
   const [form, dispatchForm] = useReducer(
     (state, action) => ({ ...state, ...action }),
     {
@@ -49,18 +37,17 @@ const Calculator = () => {
   const generateResult = () => {
     const result = calculate(form);
     return {
-      id: Date.now(),
+      id: 'calculator',
       profit: result.profit,
       percentageChange: result.percentageChange,
       buyPrice: form.buyPrice,
       sellPrice: form.sellPrice,
-      commission: result.buyCommission + result.sellCommission,
     };
   };
 
   return (
     <div>
-      <Paper className="calculator-card" elevation={1}>
+      <Paper variant="outlined" className="calculator-card" elevation={1}>
         <CalculatorRow label="Market">
           <RadioGroup row aria-label="market" name="market" value={form.market} onChange={e => dispatchForm({ market: e.target.value })}>
             <FormControlLabel value="US" control={<Radio />} label="US" />
@@ -89,22 +76,27 @@ const Calculator = () => {
           />
         </CalculatorRow>
         <div className="calculator-btn">
-          <Button variant="contained" color="primary" elevation={2}>Record</Button>
+          <Button
+            variant="contained"
+            color="primary"
+            elevation={2}
+            onClick={() => transaction.saveTransaction(generateResult())}
+          >
+            Record
+          </Button>
         </div>
       </Paper>
-      <Paper className="profit-table-container" elevation={1}>
-        <div className="profit-table">
-          <DataGrid
-            rows={[
-              generateResult(),
-            ]}
-            columns={columns}
-            pageSize={5}
-          />
-        </div>
-      </Paper>
+      <ProfitTable
+        rows={
+          (transaction.transactions.length ? [
+            ...transaction.transactions,
+            generateResult(),
+          ] : [generateResult()])
+        }
+        pageSize={5}
+      />
     </div>
   );
 };
 
-export default Calculator;
+export default observer(Calculator);
